@@ -28,6 +28,7 @@ int main()
     printf("x Bienvenue,                                                         x\n");
     printf("x ce programme implemente la BockChain du EatCoin (TP3 de NF16).     x\n");
     printf("x - essayez les differentes fonctions grace au menu.                 x\n");
+    printf("x - le bock 0 a été initialisé avec la date du 02/02/2000            x\n");
     printf("x                                                                    x\n");
     printf("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
 

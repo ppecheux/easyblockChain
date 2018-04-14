@@ -119,7 +119,7 @@ void crediter(int idEtu, float montant, char *descr,time_t date, BlockChain bc){
 
 int payer(int idEtu, float montant, char *descr,time_t date, BlockChain bc){//6 #DONE
     if(montant>soldeEtudiant(idEtu,bc)){
-        printf("lEtudiant %d ne dispose que de %f, transaction annulée",idEtu,soldeEtudiant(idEtu,bc));
+        printf("lEtudiant %d ne dispose que de %f, transaction annulee\n",idEtu,soldeEtudiant(idEtu,bc));
         return 0;
     }
     bc->listeTransaction=ajouterTransaction(idEtu,-(montant),descr,date,bc);
@@ -127,8 +127,11 @@ int payer(int idEtu, float montant, char *descr,time_t date, BlockChain bc){//6 
 }
 
 int transfert(int idSource, int idDestination, float montant, char *descr,time_t date, BlockChain bc){//7 du menu
-    if((idDestination!=idSource)&&payer(idSource,montant,descr,date,bc)==1)
+    if((idDestination!=idSource)&&payer(idSource,montant,descr,date,bc)==1){
+        printf("lEtudiant a ete paye\n");
         crediter(idDestination,montant,descr,date,bc);
+    }
+
     else
         return 0;
     return 1;
