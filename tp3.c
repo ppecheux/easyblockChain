@@ -128,8 +128,9 @@ int payer(int idEtu, float montant, char *descr,time_t date, BlockChain bc){//6 
 
 int transfert(int idSource, int idDestination, float montant, char *descr,time_t date, BlockChain bc){//7 du menu
     if((idDestination!=idSource)&&payer(idSource,montant,descr,date,bc)==1){
-        printf("lEtudiant a ete paye\n");
+        //printf("lEtudiant a ete paye\n");
         crediter(idDestination,montant,descr,date,bc);
+        //printf("et on a crédité l'autre\n");
     }
 
     else
@@ -246,32 +247,79 @@ void printTransaction(T_Transaction* t){
     }
 }
 
-void fprintTransaction(time_t date, T_Transaction* t){/* #DONE copie la transaction en début de fichier txt.
+void fprintTransaction(time_t date, T_Transaction* t){// #DONE copie la transaction en fin de fichier txt.
+    //écrire à la fin du fichier
     if(t){
 
         FILE* fichier = NULL;
 
         //copier la fin du fichier
-        char* cpyFile = malloc(sizeof(char)*(MAX_DESCR+3*MAX_I)*100);
-        char chaine[MAX_DESCR+3*MAX_I]="";
-        fichier = fopen("blockchain.txt", "r");
+        fichier = fopen("blockchain.txt", "a");
+
         if (fichier != NULL)
         {
+            printf("dans l'ecriture de fichier %ld;%d;%f;%s\n",date,t->idEtu,t->montant,t->descr);
+            fprintf(fichier,"%ld;%d;%f;%s\n",date,t->idEtu,t->montant,t->descr);
+            fclose(fichier);
+        }
+    }
+}
+
+void fprintTransactionAtBegin(time_t date, T_Transaction* t){//copie la transaction en début de fichier txt.
+    if(t){
+
+        FILE* fichier = NULL;
+
+        //copier la fin du fichier
+        char* tail = malloc(sizeof(char)*(MAX_DESCR+3*MAX_I)*100);
+        char* chaine = malloc(sizeof(MAX_DESCR+3*MAX_I));
+        printf("les chaines ont ete initialisee\n");
+
+        fichier = fopen("blockchain.txt", "r");
+        if (fichier)
+        {
+            while(fscanf(fichier,"%[^\n]\n",chaine)!=EOF){
+                strcat(chaine,"\n");
+                printf("les chaines ont ete initialisee\n");
+                strcat(tail,chaine);
+                if(chaine)
+                    printf("tail est%s\n", chaine); // On affiche la chaîne qu'on vient de lire
+            }
+            /*
             while (fgets(chaine, sizeof(char)*(MAX_DESCR+3*MAX_I), fichier) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
             {
                 strcat(cpyFile,chaine);
                 printf("la chaine copiée dans cpyfile est%s\n", chaine); // On affiche la chaîne qu'on vient de lire
-            }
+            }*/
 
             fclose(fichier);
         }
-        //ecrire dans le fichier
-        fichier = fopen("blockchain.txt", "w");
 
+        //ecrire dans le fichier da la nouvelle transaction
+        fichier = fopen("blockchain.txt", "w");
+        if (fichier)
+        {
+            printf("dans l'ecriture de fichier %ld;%d;%f;%s\n",date,t->idEtu,t->montant,t->descr);
+            fprintf(fichier,"%ld;%d;%f;%s\n",date,t->idEtu,t->montant,t->descr);
+            fclose(fichier);
+        }
+
+        fichier = fopen("blockchain.txt", "a");
+        if (fichier)
+        {
+            printf("dans l'ecriture de fichier du tail\n");
+            fprintf(fichier,"%s",tail);
+            fclose(fichier);
+        }
+    free(tail);
+    free(chaine);
+    }
+
+/*
         if (fichier != NULL)
         {
             rewind(fichier);
-            printf("dans l'ecriture de fichier %d;%d;%f;%s\n",date,t->idEtu,t->montant,t->descr);
+            printf("dans l'ecriture de fichier %ld;%d;%f;%s\n",date,t->idEtu,t->montant,t->descr);
             char ajout[MAX_DESCR+3*MAX_I]="";
             strcpy(ajout,("%d;%d;%f;%s\n",date,t->idEtu,t->montant,t->descr));
 
@@ -281,7 +329,7 @@ void fprintTransaction(time_t date, T_Transaction* t){/* #DONE copie la transact
             fclose(fichier);
         }
         free(cpyFile);
-    }*/
+    }
     //écrire à la fin du fichier
     if(t){
 
@@ -304,7 +352,7 @@ void fprintTransaction(time_t date, T_Transaction* t){/* #DONE copie la transact
             fclose(fichier);
         }
         //free(cpyFile);
-    }
+    }*/
 }
 
 void fprintBlock(BlockChain Block){//engegistre les transctions d'un block dans un fichier
@@ -319,7 +367,7 @@ void fprintBlock(BlockChain Block){//engegistre les transctions d'un block dans 
         if(Block->listeTransaction){
             printf(" et contient une liste de transaction\n");
             while(temp){
-                fprintTransaction(Block->date,temp);
+                fprintTransactionAtBegin(Block->date,temp);
                 temp=temp->suivant;
             }
         }else{
@@ -462,21 +510,26 @@ float askMontant(){
 }
 
 time_t askDate(){//demande de date et convertion en secondes
-    struct tm myDate;
-    printf("Pour le jour, ");
-    myDate.tm_mday = askIdBlock();
-    printf("Pour le mois, ");
-    myDate.tm_mon = askIdBlock()-1;
-    printf("Pour l annee, ");
-    myDate.tm_year = askIdBlock()-1900;
-    myDate.tm_hour = 1;
-    myDate.tm_min = 0;
-    myDate.tm_sec = 0;
+    time_t timestamp;
+    do{
+        struct tm myDate;
+        printf("Pour le jour, ");
+        myDate.tm_mday = askIdBlock();
+        printf("Pour le mois, ");
+        myDate.tm_mon = askIdBlock()-1;
+        printf("Pour l annee, ");
+        myDate.tm_year = askIdBlock()-1900;
+        myDate.tm_hour = 1;
+        myDate.tm_min = 0;
+        myDate.tm_sec = 0;
 
-    time_t timestamp = mktime( & myDate );
+        timestamp = mktime( & myDate );
+    }while(timestamp == -1);
     //printf( "Timestamp == %ld\n", timestamp );
 
     const char * strDate = asctime( localtime( & timestamp ) );
+
+
     printf( "Date de la transaction: %s\n", strDate );
 
     return timestamp;

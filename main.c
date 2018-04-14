@@ -96,7 +96,7 @@ int main()
                 //determination du block à la date précise
                 BlockChain bonB;
                 bonB = searchBlockbyDate(date,bc);
-                if(!bonB){
+                if(!bonB ){
                     bc = ajouterBlock(bc,date);
                     bonB=bc;
                 }
