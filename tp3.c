@@ -285,13 +285,6 @@ void fprintTransactionAtBegin(time_t date, T_Transaction* t){//copie la transact
                 if(chaine)
                     printf("tail est%s\n", chaine); // On affiche la chaîne qu'on vient de lire
             }
-            /*
-            while (fgets(chaine, sizeof(char)*(MAX_DESCR+3*MAX_I), fichier) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
-            {
-                strcat(cpyFile,chaine);
-                printf("la chaine copiée dans cpyfile est%s\n", chaine); // On affiche la chaîne qu'on vient de lire
-            }*/
-
             fclose(fichier);
         }
 
@@ -314,45 +307,6 @@ void fprintTransactionAtBegin(time_t date, T_Transaction* t){//copie la transact
     free(tail);
     free(chaine);
     }
-
-/*
-        if (fichier != NULL)
-        {
-            rewind(fichier);
-            printf("dans l'ecriture de fichier %ld;%d;%f;%s\n",date,t->idEtu,t->montant,t->descr);
-            char ajout[MAX_DESCR+3*MAX_I]="";
-            strcpy(ajout,("%d;%d;%f;%s\n",date,t->idEtu,t->montant,t->descr));
-
-            strcat(cpyFile,ajout);
-            printf(cpyFile);
-            fprintf(fichier,cpyFile);
-            fclose(fichier);
-        }
-        free(cpyFile);
-    }
-    //écrire à la fin du fichier
-    if(t){
-
-        FILE* fichier = NULL;
-
-        //copier la fin du fichier
-        fichier = fopen("blockchain.txt", "a");
-
-        if (fichier != NULL)
-        {
-            //rewind(fichier); //pour se positionner au début du fichier
-            //fseek(fichier, 0, SEEK_END);// pour se positionner à la fin du fichier
-            printf("dans l'ecriture de fichier %ld;%d;%f;%s\n",date,t->idEtu,t->montant,t->descr);
-            fprintf(fichier,"%ld;%d;%f;%s\n",date,t->idEtu,t->montant,t->descr);
-            //char ajout[MAX_DESCR+3*MAX_I]="";
-            //strcpy(ajout,("%d;%d;%f;%s\n",date,t->idEtu,t->montant,t->descr));
-            //strcat(cpyFile,ajout);
-            //printf(cpyFile);
-            //fprintf(fichier,cpyFile);
-            fclose(fichier);
-        }
-        //free(cpyFile);
-    }*/
 }
 
 void fprintBlock(BlockChain Block){//engegistre les transctions d'un block dans un fichier
