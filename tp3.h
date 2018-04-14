@@ -57,6 +57,6 @@ void fprintBlock(BlockChain Block);//engegistre les transctions d'un block dans 
 void fprintBlockChain(BlockChain Block);
 T_Block* searchBlockbyId(int idBlock, BlockChain bc);
 T_Block* searchBlockbyDate(time_t date, BlockChain bc);
-BlockChain* searchTransactionToInsert(time_t date,BlockChain* bc,BlockChain *bonB);//inutile
+BlockChain* searchTransactionToInsert(time_t date,BlockChain* bc,BlockChain *bonB);//trouver le bon Block pour inserer une tr
 void PrintMenuAjou();
 #endif // tp3_H_INCLUDED

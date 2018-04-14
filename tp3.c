@@ -36,12 +36,8 @@ T_Transaction* ajouterTransaction(int idEtu, float montant, char *descr, time_t 
     if(bc->listeTransaction){
         newTransaction->suivant=bc->listeTransaction;
     }
-
     else
         newTransaction->suivant=NULL;
-
-    //update de la tête de la listeTransaction
-    //listeTransaction = newTransaction;
 
     printTransaction(newTransaction);
 
@@ -88,7 +84,7 @@ float totalTransactionEtudiantBlock(int idEtu, BlockChain Block){//? //plus de m
             //printf("temp de la fonction print va etre freed\n");
             //free(temp);
         }else{
-            printf("Ce Block contient une liste de transaction vide\n");
+            //printf("Ce Block contient une liste de transaction vide\n");
         }
     }else{printf("ce block nexiste pas");
     }
@@ -152,7 +148,7 @@ int menu(){
     printf("  |10. Importer des transactions depuis un fichier           |\n");
     printf("  |11. Afficher le montant echange aujourd hui par letudiant |\n");
     printf("  |12. Afficher le solde du compte                           |\n");
-    printf("  |13. Ajouter une transaction dans le fichier               |\n");
+    printf("  |                                                          |\n");
     printf("  |14. Supprimer les transactions du Block                   |\n");
     printf("  |15. Supprimer les Blocks                                  |\n");
     printf("   ----------------------------------------------------------\n");
@@ -207,15 +203,14 @@ void printBlockEtu(int idEtu,T_Block* Block){//3 menu
     }
 }
 
-void printHistory(int idEtu, BlockChain bc, int lim){//4 dans le menu #DONE mais pourquoi cela ne fonctionne pas avec LIM?
-    //mais pourquoi cela ne fonctionne pas avec la creation d'un nouveau block juste avant?
+void printHistory(int idEtu, BlockChain bc, int lim){//4 dans le menu #DONE
     int limPrintT = 0;
     if(bc){
-        T_Block* tB;// = malloc(sizeof(T_Block));
+        T_Block* tB;
         tB = bc;
-        while(tB&&limPrintT<5){
+        while(tB&&limPrintT<lim){
 
-            T_Transaction* temp= malloc(sizeof(T_Transaction));
+            T_Transaction* temp;
             temp=tB->listeTransaction;
 
             if(temp){
@@ -227,14 +222,11 @@ void printHistory(int idEtu, BlockChain bc, int lim){//4 dans le menu #DONE mais
                     }
                     temp=temp->suivant;
                 }
-                //printf("temp de la fonction print va etre freed\n");
-                //free(temp);
             }else{
-                printf("Ce Block contient une liste de transaction vide\n");
+                //printf("Ce Block contient une liste de transaction vide\n");
             }
             tB=tB->suivant;
         }
-        free(tB);
     }
 }
 
@@ -395,7 +387,7 @@ void fgetsClean(char *s){//cette fonction permet de lire une chaine correctement
 
 }
 
-void fAjouTransaction(BlockChain* bc, BlockChain *bonB){
+void fAjouTransaction(BlockChain* bc, BlockChain *bonB){//pour ajouter une transaction à la fin d'un fichier
     if(bc){
         time_t date;
         int idEtu;
@@ -467,7 +459,7 @@ time_t askDate(){//demande de date et convertion en secondes
         myDate.tm_mon = askIdBlock()-1;
         printf("Pour l annee, ");
         myDate.tm_year = askIdBlock()-1900;
-        myDate.tm_hour = 1;
+        myDate.tm_hour = 0;
         myDate.tm_min = 0;
         myDate.tm_sec = 0;
 
@@ -511,10 +503,8 @@ T_Block* searchBlockbyDate(time_t date, BlockChain bc){//#DONE
     return NULL;
 }
 
-BlockChain* searchTransactionToInsert(time_t date,BlockChain* bc,BlockChain *bonB){//inutile
-    if(bc && date != -1){
-        //BlockChain* bonB=NULL;
-
+BlockChain* searchTransactionToInsert(time_t date,BlockChain* bc,BlockChain *bonB){//#DONE
+    if(bc && date != (-1)){
         *bonB = searchBlockbyDate(date,*bc);
         if(!*bonB){
             *bc = ajouterBlock(*bc,date);

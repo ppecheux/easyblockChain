@@ -53,8 +53,7 @@ int main()
                 do{
                     printf("saisissez lID du block que vous voulez consulter:");
                     fgetsClean(sidBlock);
-                    sscanf(sidBlock,"%d",&idBlock);
-                    //printf("vous avez saisi lid du block temp est:%d\n",idBlock);
+                    sscanf(sidBlock,"%d",&idBlock);;
                 }while(idBlock<=-1);
 
                 //Recherche du Block et affichage
@@ -82,6 +81,12 @@ int main()
                 }while (sousChoix>=7 && sousChoix<=5);
 
                 //informations generales avant d'inserer une nouvelle transaction
+                //pour la date
+                time_t date;
+                do{
+                    date = askDate();
+                }while (date == (-1) || (!searchBlockbyDate(date,bc)&& date<bc->date && (printf("la creation de blocks dans le passe nest pas autorisee\n"))));
+
                 char *descr = (char *)malloc(MAX_DESCR+1);
                 float montant;
                 int idEtu;
@@ -91,7 +96,7 @@ int main()
 
                 idEtu=askIdEtu();
                 montant=askMontant();
-                time_t date = askDate();
+
 
                 //determination du block à la date précise
                 BlockChain bonB;
@@ -135,10 +140,6 @@ int main()
                 int idEtu;
                 idEtu=askIdEtu();
                 printf("L etudiant %d a %f EATCoins\n",idEtu,soldeEtudiant(idEtu,bc));
-                break;
-            }
-            case 13 :{//A virer
-                fprintTransaction(10,bc->listeTransaction);
                 break;
             }
             case 14 :{
