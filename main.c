@@ -95,15 +95,8 @@ int main()
 
                 //determination du block à la date précise
                 BlockChain bonB;
-                bonB = searchBlockbyDate(date,bc);
-                if(!bonB){
-                    if(date<bc->date){
-                        printf("nous n autorisons pas l insersion d une transaction dans le passe\n si aucune transaction n a deja ete passe a la date indiquee\n");
-                        break;
-                    }
-                    bc = ajouterBlock(bc,date);
-                    bonB=bc;
-                }
+                bonB=(*searchTransactionToInsert(date,&bc,&bonB));
+
                 switch(sousChoix){
                     case 5 :{//crediter
                         crediter(idEtu, montant, descr,date, bonB);

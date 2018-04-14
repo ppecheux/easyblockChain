@@ -51,12 +51,12 @@ int askIdEtu();
 int askIdBlock();
 float askMontant();
 time_t askDate();
-void fprintTransaction(time_t date,T_Transaction* t);
+void fprintTransaction(time_t date,T_Transaction* t);//copie la transaction en fin de fichier txt.
 void fprintTransactionAtBegin(time_t date, T_Transaction* t);//copie la transaction en début de fichier txt.
 void fprintBlock(BlockChain Block);//engegistre les transctions d'un block dans un fichier
 void fprintBlockChain(BlockChain Block);
 T_Block* searchBlockbyId(int idBlock, BlockChain bc);
 T_Block* searchBlockbyDate(time_t date, BlockChain bc);
-T_Transaction* searchTransactionToInsert(time_t date,BlockChain bc);//inutile
+BlockChain* searchTransactionToInsert(time_t date,BlockChain* bc,BlockChain *bonB);//inutile
 void PrintMenuAjou();
 #endif // tp3_H_INCLUDED

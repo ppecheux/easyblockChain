@@ -407,13 +407,7 @@ void fAjouTransaction(BlockChain* bc, BlockChain *bonB){
 
         if (fichier != NULL){
             while(fscanf(fichier,"%ld%*c%d%*c%f%*c%[^\n]\n",&date,&idEtu,&montant,descr)!=EOF){
-
-                *bonB = searchBlockbyDate(date,*bc);
-                if(!*bonB){
-                    *bc = ajouterBlock(*bc,date);
-                    *bonB=*bc;
-                }
-                (*bonB)->listeTransaction= ajouterTransaction(idEtu,montant,descr,date,*bonB);
+                (*searchTransactionToInsert(date,bc,bonB))->listeTransaction = ajouterTransaction(idEtu,montant,descr,date,(*searchTransactionToInsert(date,bc,bonB)));
             }
             fclose(fichier);
         }
@@ -517,15 +511,18 @@ T_Block* searchBlockbyDate(time_t date, BlockChain bc){//#DONE
     return NULL;
 }
 
-T_Transaction* searchTransactionToInsert(time_t date,BlockChain bc){//inutile
-    BlockChain Block;
-    Block = searchBlockbyDate(date,bc);
-    if(Block)
-        return Block->listeTransaction;
-    else{
-        bc = ajouterBlock(bc,date);
+BlockChain* searchTransactionToInsert(time_t date,BlockChain* bc,BlockChain *bonB){//inutile
+    if(bc && date != -1){
+        //BlockChain* bonB=NULL;
+
+        *bonB = searchBlockbyDate(date,*bc);
+        if(!*bonB){
+            *bc = ajouterBlock(*bc,date);
+            *bonB=*bc;
+        }
+        return bonB;
     }
-    return bc->listeTransaction;
+    return NULL;
 }
 
 void PrintMenuAjou(){
