@@ -71,7 +71,7 @@ float totalTransactionEtudiantBlock(int idEtu, BlockChain Block){//? //plus de m
     float soldeJour=0.0;
     if(Block){
 
-        T_Transaction* temp;//= malloc(sizeof(T_Transaction));//pourquoi on ne peut pas ne pas utilier le malloc?
+        T_Transaction* temp;
         temp=Block->listeTransaction;
 
         if(temp){
@@ -82,7 +82,6 @@ float totalTransactionEtudiantBlock(int idEtu, BlockChain Block){//? //plus de m
                 temp=temp->suivant;
             }
             //printf("temp de la fonction print va etre freed\n");
-            //free(temp);
         }else{
             //printf("Ce Block contient une liste de transaction vide\n");
         }
