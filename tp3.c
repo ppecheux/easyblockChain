@@ -458,7 +458,7 @@ time_t askDate(){//demande de date et convertion en secondes
         myDate.tm_mon = askIdBlock()-1;
         printf("Pour l annee, ");
         myDate.tm_year = askIdBlock()-1900;
-        myDate.tm_hour = 0;
+        myDate.tm_hour = 1;
         myDate.tm_min = 0;
         myDate.tm_sec = 0;
 
