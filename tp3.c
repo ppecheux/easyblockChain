@@ -67,7 +67,7 @@ BlockChain ajouterBlock(BlockChain bc, time_t t){//#DONE
     return bc;
 }
 
-float totalTransactionEtudiantBlock(int idEtu, BlockChain Block){//? //plus de malloc? ca marchait sans! flute alors!!!!
+float totalTransactionEtudiantBlock(int idEtu, BlockChain Block){//
     float soldeJour=0.0;
     if(Block){
 
@@ -427,7 +427,7 @@ int askIdBlock(){
     idEtu=0;
 
     do{
-        printf("Saisissez un le numero de votre choix:");
+        printf(" saisissez le numero de votre choix:");
         fgetsClean(sidEtu);
         sscanf(sidEtu,"%d",&idEtu);
     }while(idEtu<=0);
@@ -490,7 +490,7 @@ T_Block* searchBlockbyId(int idBlock, BlockChain bc){//renvoi le block de la cha
     return NULL;
 }
 
-T_Block* searchBlockbyDate(time_t date, BlockChain bc){//#DONE
+T_Block* searchBlockbyDateNonTrie(time_t date, BlockChain bc){//#DONE /:parcourt tout bc avant de renvoyer le blaock
     T_Block* temp;
     if(!bc)return NULL;
     temp=bc;
@@ -505,9 +505,10 @@ T_Block* searchBlockbyDate(time_t date, BlockChain bc){//#DONE
 BlockChain* searchTransactionToInsert(time_t date,BlockChain* bc,BlockChain *bonB){//#DONE
     if(bc && date != (-1)){
         *bonB = searchBlockbyDate(date,*bc);
-        if(!*bonB){
-            *bc = ajouterBlock(*bc,date);
-            *bonB=*bc;
+        if((*bonB)->date!=date){
+            (*bonB)->suivant = ajouterBlock((*bonB)->suivant,date);
+            *bonB=(*bonB)->suivant;
+            //*bonB=*bc;
         }
         return bonB;
     }
@@ -518,8 +519,35 @@ void PrintMenuAjou(){
     printf("   ----------------------------------------------------------\n");
     printf("  | Que voulez-vous faire ?                                  |\n");
     printf("   ----------------------------------------------------------\n");
-    printf("  |5. Créditer un compte                                     |\n");
+    printf("  |5. Crediter un compte                                     |\n");
     printf("  |6. Payer un repas                                         |\n");
     printf("  |7. Transferer des EATCoins entre deux etudiants           |\n");
     printf("   ----------------------------------------------------------\n");
+}
+
+
+T_Block* searchBlockbyDate(time_t date, BlockChain bc){//#DONE
+    T_Block* temp;
+    if(!bc) return NULL;
+    temp=bc;
+    while(temp && temp->suivant && date<temp->date && date<(temp->suivant)->date)
+    {
+            temp=temp->suivant;
+    }
+    printBlock(temp);
+    return temp;
+}
+
+BlockChain insertBlock(BlockChain bc, BlockChain* Block, BlockChain* newB){
+    if(*Block){
+        if((*Block)->date == bc->date){//inserer au debut de la liste.
+;
+        }
+        if((*Block)->suivant){
+            (*newB)->suivant=(*Block)->suivant;
+            (*Block)->suivant=newB;
+            return newB;
+        }
+
+    }
 }
