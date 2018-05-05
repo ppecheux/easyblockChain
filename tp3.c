@@ -38,8 +38,10 @@ BlockChain ajouterBlock(BlockChain bc, time_t t){//#DONE
 
     T_Block* newBlock = creeBlock(t);
 
-    if(bc)
+    if(bc){
         bc = insertBlockbyDate(bc, newBlock);
+        bc = uptadeIDBlock(bc);
+    }
     //printf("bc pointe sur le %deme block\n",bc->idBlock);
     return bc;
 }
@@ -49,7 +51,7 @@ BlockChain insertBlockbyDate(BlockChain bc, BlockChain newBlock){
         //printf("bc nes pas null\n");
         if (bc->date < newBlock->date){ //insertion au debut de la blockchain
             newBlock->suivant=bc;
-            newBlock->idBlock = bc->idBlock+1;
+            //newBlock->idBlock = bc->idBlock+1;
             bc=newBlock;
             //printf("bc pointe sur le %deme block\n",bc->idBlock);
 
@@ -59,32 +61,31 @@ BlockChain insertBlockbyDate(BlockChain bc, BlockChain newBlock){
             if (tmp->suivant){
                 while(tmp->suivant->date > newBlock->date){
 
-                    (tmp->idBlock)++;
+                    //(tmp->idBlock)++;
                     //printBlock(tmp);
                     tmp=tmp->suivant;
 
                     if (!tmp->suivant){//nous sommes à la fin de la chaine
-                        newBlock->suivant=NULL;
+                        //newBlock->suivant=NULL;
                         tmp->suivant = newBlock;
-                        tmp->idBlock++;
+                        //tmp->idBlock++;
                         return bc;
                     }
                 }//nous sommes au milieu de la liste
                 newBlock->suivant=tmp->suivant;
                 tmp->suivant = newBlock;
-                newBlock->idBlock=tmp->idBlock-1;
+                //newBlock->idBlock=tmp->idBlock-1;
+                //bc = uptadeIDBlock(bc);
                 return bc;
             }else{//on insert à la fin d'une liste de longueur 1
-                newBlock->suivant=NULL;
+                //newBlock->suivant=NULL;
                 tmp->suivant = newBlock;
-                tmp->idBlock++;
+                //tmp->idBlock++;
                 return bc;
             }
         }
     }
     else{
-        newBlock->suivant=NULL;
-        newBlock->idBlock=0;
         return newBlock;
     }
     return bc;
@@ -97,6 +98,7 @@ BlockChain creeBlock(time_t t){
     newBlock->listeTransaction = NULL;//pas de malloc car liste vide
     newBlock->date=t;
     newBlock->idBlock=0;
+    newBlock->suivant=NULL;
     return newBlock;
 }
 
@@ -217,4 +219,16 @@ int nbBlockinChain(BlockChain bc){
         }
     }
     return nbBlock;
+}
+
+BlockChain uptadeIDBlock(BlockChain bc){//change le num des blocks tant que ca ne match pas mais ne vérifie pas toute la liste
+    if (bc){
+        int nbBlock = (nbBlockinChain(bc)-1);
+        BlockChain tmp = bc;
+        while(tmp && tmp->idBlock != nbBlock){
+            tmp->idBlock = nbBlock--;
+            tmp=tmp->suivant;
+        }
+    }
+    return bc;
 }

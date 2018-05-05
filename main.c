@@ -156,7 +156,12 @@ int main()
                 break;
             }
             case 16 :{
-                printf("il y a %d Blocks dans la chaine",nbBlockinChain(bc));
+                printf("il y a %d Blocks dans la chaine\n",nbBlockinChain(bc));
+                break;
+            }
+            case 17:{
+                time_t t = askDate();
+                printBlock(searchBlockbyDate(t,bc));
                 break;
             }
             default: {

@@ -24,7 +24,7 @@ void clearTransactions(BlockChain Block){
 
 BlockChain clearBlocks(BlockChain Block){//retourne un pointeur sur le block 0;
     BlockChain temp;
-    while(Block->idBlock!=0){
+    while(Block->suivant){
         temp=Block;
         clearTransactions(Block);
         Block=Block->suivant;

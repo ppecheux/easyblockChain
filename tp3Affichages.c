@@ -113,7 +113,8 @@ int menu(){
     printf("  | Que voulez-vous faire ?                                  |\n");
     printf("   ----------------------------------------------------------\n");
     printf("  |1. Afficher la liste de la BlockChain                     |\n");
-    printf("  |2. Afficher toutes les transactions d un bloc             |\n");
+    printf("  |2. Afficher toutes les transactions d un bloc par id      |\n");
+    printf("  |17. Afficher toutes les transactions d un bloc par date   |\n");
     printf("  |3. Affiche les transactions du jour pour un etudiant      |\n");
     printf("  |4. Afficher l historique pour un etudiant                 |\n");
     printf("  |5. crediter/payer/transferer                              |\n");
@@ -125,7 +126,7 @@ int menu(){
     printf("  |                                                          |\n");
     printf("  |14. Supprimer les transactions du Block                   |\n");
     printf("  |15. Supprimer les Blocks                                  |\n");
-    printf("  |14. Afficher le nombre de Blocks dans la chaine           |\n");
+    printf("  |16. Afficher le nombre de Blocks dans la chaine           |\n");
     printf("   ----------------------------------------------------------\n");
 
     return 0;
