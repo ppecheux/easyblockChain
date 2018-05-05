@@ -46,7 +46,7 @@ void printTransaction(T_Transaction* t);
 void clearTransactions(BlockChain Block);// free les transactions d'un block
 BlockChain clearBlocks(BlockChain Block);
 void fgetsClean(char *s);//a pour but de recolter des chaines de char.
-void fAjouTransaction(BlockChain *bc, BlockChain *bonB);//ajoute les transactions du fichier dans bc
+void fAjouTransaction(BlockChain *bc);//ajoute les transactions du fichier dans bc
 int askIdEtu();
 int askIdBlock();
 float askMontant();
@@ -57,6 +57,6 @@ void fprintBlock(BlockChain Block);//engegistre les transctions d'un block dans 
 void fprintBlockChain(BlockChain Block);
 T_Block* searchBlockbyId(int idBlock, BlockChain bc);
 T_Block* searchBlockbyDate(time_t date, BlockChain bc);
-BlockChain* searchTransactionToInsert(time_t date,BlockChain* bc,BlockChain *bonB);//trouver le bon Block pour inserer une tr
+BlockChain* searchTransactionToInsert(time_t date,BlockChain* bc);//trouver le bon Block pour inserer une tr
 void PrintMenuAjou();
 #endif // tp3_H_INCLUDED

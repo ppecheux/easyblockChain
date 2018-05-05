@@ -100,7 +100,7 @@ int main()
 
                 //determination du block à la date précise
                 BlockChain bonB;
-                bonB=(*searchTransactionToInsert(date,&bc,&bonB));
+                bonB=(*searchTransactionToInsert(date,&bc));
 
                 switch(sousChoix){
                     case 5 :{//crediter
@@ -118,6 +118,10 @@ int main()
                         transfert(idEtu,idDestinataire,montant,descr,date,bonB);
                         break;
                     }
+                    default:{
+                        printf("vous navez pas saisi un numero valide\n");
+                    }
+
                 }
                 break;
             }
@@ -126,8 +130,8 @@ int main()
                 break;
             }
             case 10 :{
-                BlockChain bonB;
-                fAjouTransaction(&bc,&bonB);
+                //BlockChain bonB;
+                fAjouTransaction(&bc);
                 break;
             }
             case 11 :{//montant de la journée #done
