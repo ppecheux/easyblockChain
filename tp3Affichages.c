@@ -125,6 +125,7 @@ int menu(){
     printf("  |                                                          |\n");
     printf("  |14. Supprimer les transactions du Block                   |\n");
     printf("  |15. Supprimer les Blocks                                  |\n");
+    printf("  |14. Afficher le nombre de Blocks dans la chaine           |\n");
     printf("   ----------------------------------------------------------\n");
 
     return 0;
@@ -134,7 +135,7 @@ void PrintMenuAjou(){
     printf("   ----------------------------------------------------------\n");
     printf("  | Que voulez-vous faire ?                                  |\n");
     printf("   ----------------------------------------------------------\n");
-    printf("  |5. Créditer un compte                                     |\n");
+    printf("  |5. Crediter un compte                                     |\n");
     printf("  |6. Payer un repas                                         |\n");
     printf("  |7. Transferer des EATCoins entre deux etudiants           |\n");
     printf("   ----------------------------------------------------------\n");

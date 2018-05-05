@@ -85,7 +85,7 @@ int main()
                 time_t date;
                 do{
                     date = askDate();
-                }while (date == (-1) || (!searchBlockbyDate(date,bc)&& date<bc->date && (printf("la creation de blocks dans le passe nest pas autorisee\n"))));
+                }while (date == (-1)); //|| (!searchBlockbyDate(date,bc)&& date<bc->date && (printf("la creation de blocks dans le passe nest pas autorisee\n"))));
 
                 char *descr = (char *)malloc(MAX_DESCR+1);
                 float montant;
@@ -156,9 +156,7 @@ int main()
                 break;
             }
             case 16 :{
-                time_t t;
-                t = askDate();
-                bc = ajouterBlock(bc,t);
+                printf("il y a %d Blocks dans la chaine",nbBlockinChain(bc));
                 break;
             }
             default: {

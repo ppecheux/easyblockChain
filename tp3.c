@@ -38,13 +38,20 @@ BlockChain ajouterBlock(BlockChain bc, time_t t){//#DONE
 
     T_Block* newBlock = creeBlock(t);
 
+    if(bc)
+        bc = insertBlockbyDate(bc, newBlock);
+    //printf("bc pointe sur le %deme block\n",bc->idBlock);
+    return bc;
+}
+
+BlockChain insertBlockbyDate(BlockChain bc, BlockChain newBlock){
     if(bc){
         //printf("bc nes pas null\n");
         if (bc->date < newBlock->date){ //insertion au debut de la blockchain
             newBlock->suivant=bc;
             newBlock->idBlock = bc->idBlock+1;
             bc=newBlock;
-            printf("bc pointe sur le %deme block\n",bc->idBlock);
+            //printf("bc pointe sur le %deme block\n",bc->idBlock);
 
         }else{
             BlockChain tmp = bc;
@@ -53,7 +60,7 @@ BlockChain ajouterBlock(BlockChain bc, time_t t){//#DONE
                 while(tmp->suivant->date > newBlock->date){
 
                     (tmp->idBlock)++;
-                    printBlock(tmp);
+                    //printBlock(tmp);
                     tmp=tmp->suivant;
 
                     if (!tmp->suivant){//nous sommes à la fin de la chaine
@@ -80,7 +87,6 @@ BlockChain ajouterBlock(BlockChain bc, time_t t){//#DONE
         newBlock->idBlock=0;
         return newBlock;
     }
-    printf("bc pointe sur le %deme block\n",bc->idBlock);
     return bc;
 }
 
@@ -194,11 +200,21 @@ BlockChain* searchTransactionToInsert(time_t date,BlockChain* bc){//#DONE
         *bonB = searchBlockbyDate(date,*bc);
         if(!*bonB){
             *bc = ajouterBlock(*bc,date);
-            *bonB=*bc;
+            *bonB= searchBlockbyDate(date,*bc);
         }
         return bonB;
     }
     return NULL;
 }
 
-
+int nbBlockinChain(BlockChain bc){
+    int nbBlock =0;
+    if (bc){
+        BlockChain tmp = bc;
+        while(tmp){
+            tmp= tmp->suivant;
+            nbBlock++;
+        }
+    }
+    return nbBlock;
+}
