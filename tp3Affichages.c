@@ -113,9 +113,9 @@ int menu(){
     printf("  | Que voulez-vous faire ?                                  |\n");
     printf("   ----------------------------------------------------------\n");
     printf("  |1. Afficher la liste de la BlockChain                     |\n");
-    printf("  |2. Afficher toutes les transactions d’un bloc             |\n");
-    printf("  |3. Affiche les transactions du jour pour un étudiant      |\n");
-    printf("  |4. Afficher l’historique pour un étudiant                 |\n");
+    printf("  |2. Afficher toutes les transactions d un bloc             |\n");
+    printf("  |3. Affiche les transactions du jour pour un etudiant      |\n");
+    printf("  |4. Afficher l historique pour un etudiant                 |\n");
     printf("  |5. crediter/payer/transferer                              |\n");
     printf("  |8. Quitter                                                |\n");
     printf("  |9. Exporter toutes les transactions vers un fichier       |\n");

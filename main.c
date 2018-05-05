@@ -130,7 +130,6 @@ int main()
                 break;
             }
             case 10 :{
-                //BlockChain bonB;
                 fAjouTransaction(&bc);
                 break;
             }

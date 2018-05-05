@@ -35,12 +35,9 @@ T_Transaction* ajouterTransaction(int idEtu, float montant, char *descr, time_t 
 }
 
 BlockChain ajouterBlock(BlockChain bc, time_t t){//#DONE
-    //allocation de l'espace mémoire correspondant à un Block
-    T_Block* newBlock = malloc(sizeof(T_Block));
-    //initialisation du Block et update de la Blockchain
 
-    newBlock->listeTransaction = NULL;//pas de malloc car liste vide
-    newBlock->date=t;
+    T_Block* newBlock = creeBlock(t);
+
     if(bc){
         //printf("bc nes pas null\n");
         newBlock->suivant=bc;
@@ -55,6 +52,15 @@ BlockChain ajouterBlock(BlockChain bc, time_t t){//#DONE
     }
     //printf("bc pointe sur le %deme block\n",bc->idBlock);
     return bc;
+}
+
+BlockChain creeBlock(time_t t){
+    //allocation de l'espace mémoire correspondant à un Block
+    T_Block* newBlock = malloc(sizeof(T_Block));
+    //initialisation du Block
+    newBlock->listeTransaction = NULL;//pas de malloc car liste vide
+    newBlock->date=t;
+    return newBlock;
 }
 
 float totalTransactionEtudiantBlock(int idEtu, BlockChain Block){//envoie la variation du solde pour un block
@@ -123,35 +129,6 @@ int transfert(int idSource, int idDestination, float montant, char *descr,time_t
 
 //fonctions optionelles
 
-void clearTransactions(BlockChain Block){
-    if(Block){
-        printf("le block %d existe\n",Block->idBlock);
-        T_Transaction* temp;
-        while(Block->listeTransaction){
-            temp=Block->listeTransaction;
-            Block->listeTransaction=temp->suivant;
-            free(temp);
-        }
-        printf("la liste de transaction est maintenant vide\n");
-    }
-}
-
-BlockChain clearBlocks(BlockChain Block){//retourne un pointeur sur le block 0;
-    BlockChain temp;
-    while(Block->idBlock!=0){
-        temp=Block;
-        clearTransactions(Block);
-        Block=Block->suivant;
-        free(temp);
-    }
-
-    clearTransactions(Block);
-
-    return Block;
-}
-
-
-
 T_Block* searchBlockbyId(int idBlock, BlockChain bc){//renvoi le block de la chaine ayant l'id indiqué
     T_Block* temp;
     if(!bc)return NULL;
@@ -181,7 +158,7 @@ T_Block* searchBlockbyDate(time_t date, BlockChain bc){//#DONE
 }
 
 BlockChain* searchTransactionToInsert(time_t date,BlockChain* bc){//#DONE
-    BlockChain* bonB;
+    BlockChain* bonB = malloc(sizeof(BlockChain));
     if(bc && date != (-1)){
         *bonB = searchBlockbyDate(date,*bc);
         if(!*bonB){

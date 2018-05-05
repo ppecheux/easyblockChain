@@ -25,6 +25,7 @@ typedef T_Block* BlockChain;
 // fonctions requises
 T_Transaction* ajouterTransaction(int idEtu, float montant, char *descr, time_t date, BlockChain bc);
 BlockChain ajouterBlock(BlockChain bc, time_t t);
+BlockChain creeBlock(time_t t);
 float totalTransactionEtudiantBlock(int idEtu, BlockChain Block);//3 requis //Calcul de la somme des EATCoin crédités et dépensés par un étudiant sur une journée
 float soldeEtudiant(int idEtu, BlockChain bc);//4 requis //retourne le montant disponible sur le compte de l'étudiant
 void crediter(int idEtu, float montant, char *descr,time_t date, BlockChain bc);//5 du menu
