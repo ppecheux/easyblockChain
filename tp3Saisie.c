@@ -74,7 +74,7 @@ time_t askDate(){//demande de date et convertion en secondes
 
     const char * strDate = asctime( localtime( & timestamp ) );
 
-    printf( "Date de la transaction: %s\n", strDate );
+    //printf( "Date de la transaction: %s\n", strDate );
 
     return timestamp;
 }

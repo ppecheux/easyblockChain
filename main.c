@@ -155,6 +155,12 @@ int main()
                 bc = clearBlocks(bc);
                 break;
             }
+            case 16 :{
+                time_t t;
+                t = askDate();
+                bc = ajouterBlock(bc,t);
+                break;
+            }
             default: {
                 printf("Nous n avons pas ce numero\n");
                 break;

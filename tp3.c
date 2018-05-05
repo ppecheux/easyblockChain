@@ -40,17 +40,47 @@ BlockChain ajouterBlock(BlockChain bc, time_t t){//#DONE
 
     if(bc){
         //printf("bc nes pas null\n");
-        newBlock->suivant=bc;
-        newBlock->idBlock = bc->idBlock+1;
-        bc=newBlock;
-        //printf("bc pointe sur le %deme block\n",bc->idBlock);
+        if (bc->date < newBlock->date){ //insertion au debut de la blockchain
+            newBlock->suivant=bc;
+            newBlock->idBlock = bc->idBlock+1;
+            bc=newBlock;
+            printf("bc pointe sur le %deme block\n",bc->idBlock);
+
+        }else{
+            BlockChain tmp = bc;
+
+            if (tmp->suivant){
+                while(tmp->suivant->date > newBlock->date){
+
+                    (tmp->idBlock)++;
+                    printBlock(tmp);
+                    tmp=tmp->suivant;
+
+                    if (!tmp->suivant){//nous sommes à la fin de la chaine
+                        newBlock->suivant=NULL;
+                        tmp->suivant = newBlock;
+                        tmp->idBlock++;
+                        return bc;
+                    }
+                }//nous sommes au milieu de la liste
+                newBlock->suivant=tmp->suivant;
+                tmp->suivant = newBlock;
+                newBlock->idBlock=tmp->idBlock-1;
+                return bc;
+            }else{//on insert à la fin d'une liste de longueur 1
+                newBlock->suivant=NULL;
+                tmp->suivant = newBlock;
+                tmp->idBlock++;
+                return bc;
+            }
+        }
     }
     else{
         newBlock->suivant=NULL;
         newBlock->idBlock=0;
         return newBlock;
     }
-    //printf("bc pointe sur le %deme block\n",bc->idBlock);
+    printf("bc pointe sur le %deme block\n",bc->idBlock);
     return bc;
 }
 
@@ -60,6 +90,7 @@ BlockChain creeBlock(time_t t){
     //initialisation du Block
     newBlock->listeTransaction = NULL;//pas de malloc car liste vide
     newBlock->date=t;
+    newBlock->idBlock=0;
     return newBlock;
 }
 
