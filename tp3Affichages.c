@@ -127,6 +127,7 @@ int menu(){
     printf("  |14. Supprimer les transactions du Block                   |\n");
     printf("  |15. Supprimer les Blocks                                  |\n");
     printf("  |16. Afficher le nombre de Blocks dans la chaine           |\n");
+    printf("  |                                                          |\n");
     printf("   ----------------------------------------------------------\n");
 
     return 0;

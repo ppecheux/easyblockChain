@@ -125,6 +125,7 @@ int main()
                 }
                 break;
             }
+            case 8 :{break;}//pour ne pas faire defaut avant de sortir
             case 9 :{
                 fprintBlockChain(bc);
                 break;
@@ -162,6 +163,11 @@ int main()
             case 17:{
                 time_t t = askDate();
                 printBlock(searchBlockbyDate(t,bc));
+                break;
+            }
+            case 18:{
+                bc = insertionSortbyDate(bc);
+                printBlockChain(bc);
                 break;
             }
             default: {

@@ -22,6 +22,21 @@ void clearTransactions(BlockChain Block){
     }
 }
 
+BlockChain clearBlock(BlockChain Block,BlockChain bc){//attention, ne fonctionne que si les blocks ont des ID décroissants de 1 en 1.
+    if (Block){
+
+        clearTransactions(Block);
+        if(Block->idBlock == nbBlockinChain(bc)){//il faut supprimer le premier block de la chaine
+            bc->suivant=Block->suivant;
+        }else{
+            BlockChain tmp = searchBlockbyId((Block->idBlock+1),bc);
+            tmp->suivant=Block->suivant;
+        }
+        free(Block);
+    }
+    return bc;
+}
+
 BlockChain clearBlocks(BlockChain Block){//retourne un pointeur sur le block 0;
     BlockChain temp;
     while(Block->suivant){

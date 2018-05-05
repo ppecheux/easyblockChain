@@ -130,8 +130,6 @@ float soldeEtudiant(int idEtu, BlockChain bc){//4 requis //retourne le montant d
     return solde;
 }
 
-
-
 void crediter(int idEtu, float montant, char *descr,time_t date, BlockChain bc){//5 #DONE
         bc->listeTransaction = ajouterTransaction(idEtu,montant,descr,date,bc);
 }
@@ -217,10 +215,37 @@ BlockChain uptadeIDBlock(BlockChain bc){//change le num des blocks tant que ca n
     if (bc){
         int nbBlock = (nbBlockinChain(bc)-1);
         BlockChain tmp = bc;
-        while(tmp && tmp->idBlock != nbBlock){
+        while(tmp ){//&& tmp->idBlock != nbBlock){
             tmp->idBlock = nbBlock--;
             tmp=tmp->suivant;
         }
     }
     return bc;
+}
+
+BlockChain insertionSortbyDate(BlockChain bc){
+    if(bc){
+        int taille = (nbBlockinChain(bc)-2);
+        int i;
+        for (i=taille;i>0;--i){
+
+            bc = uptadeIDBlock(bc);
+            BlockChain tmp = selectBlock(searchBlockbyId(i,bc),&bc);
+            bc = insertBlockbyDate(bc,tmp);
+            printf("i est %d\n",i);
+        }
+    }
+    return bc;
+}
+
+BlockChain selectBlock(BlockChain Block,BlockChain* bc){//attention, ne fonctionne que si les blocks ont des ID décroissants de 1 en 1.
+    if (Block){
+        if(Block->idBlock == nbBlockinChain(*bc)){//il faut supprimer le premier block de la chaine
+            (*bc)->suivant=Block->suivant;
+        }else{
+            BlockChain tmp = searchBlockbyId((Block->idBlock+1),*bc);
+            (tmp)->suivant=Block->suivant;
+        }
+    }
+    return Block;
 }

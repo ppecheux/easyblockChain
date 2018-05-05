@@ -63,4 +63,5 @@ BlockChain* searchTransactionToInsert(time_t date,BlockChain* bc);//trouver le b
 void PrintMenuAjou();
 int nbBlockinChain(BlockChain bc);
 BlockChain uptadeIDBlock(BlockChain bc);
+BlockChain selectBlock(BlockChain Block,BlockChain* bc);
 #endif // tp3_H_INCLUDED

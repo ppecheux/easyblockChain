@@ -106,7 +106,7 @@ void fprintBlock(BlockChain Block){//engegistre les transctions d'un block dans 
         if(Block->listeTransaction){
             printf(" et contient une liste de transaction\n");
             while(temp){
-                fprintTransactionAtBegin(Block->date,temp);
+                fprintTransaction(Block->date,temp);
                 temp=temp->suivant;
             }
         }else{
