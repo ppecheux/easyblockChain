@@ -48,10 +48,9 @@ BlockChain ajouterBlock(BlockChain bc, time_t t){//#DONE
 
 BlockChain insertBlockbyDate(BlockChain bc, BlockChain newBlock){
     if(bc){
-        //printf("bc nes pas null\n");
+        //printf("bc nest pas null\n");
         if (bc->date < newBlock->date){ //insertion au debut de la blockchain
             newBlock->suivant=bc;
-            //newBlock->idBlock = bc->idBlock+1;
             bc=newBlock;
             //printf("bc pointe sur le %deme block\n",bc->idBlock);
 
@@ -60,27 +59,20 @@ BlockChain insertBlockbyDate(BlockChain bc, BlockChain newBlock){
 
             if (tmp->suivant){
                 while(tmp->suivant->date > newBlock->date){
-
-                    //(tmp->idBlock)++;
-                    //printBlock(tmp);
                     tmp=tmp->suivant;
 
                     if (!tmp->suivant){//nous sommes à la fin de la chaine
-                        //newBlock->suivant=NULL;
                         tmp->suivant = newBlock;
-                        //tmp->idBlock++;
                         return bc;
                     }
                 }//nous sommes au milieu de la liste
+
                 newBlock->suivant=tmp->suivant;
                 tmp->suivant = newBlock;
-                //newBlock->idBlock=tmp->idBlock-1;
-                //bc = uptadeIDBlock(bc);
                 return bc;
+
             }else{//on insert à la fin d'une liste de longueur 1
-                //newBlock->suivant=NULL;
                 tmp->suivant = newBlock;
-                //tmp->idBlock++;
                 return bc;
             }
         }
