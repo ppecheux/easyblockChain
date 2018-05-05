@@ -118,9 +118,6 @@ int main()
                         transfert(idEtu,idDestinataire,montant,descr,date,bonB);
                         break;
                     }
-                    default:{
-                        printf("vous navez pas saisi un numero valide");
-                    }
                 }
                 break;
             }
@@ -153,16 +150,10 @@ int main()
             }
             case 15 :{
                 bc = clearBlocks(bc);
-                 break;
-            }
-            case 16 :{
-                time_t date;
-                date= askDate();
-                printBlock(searchBlockbyDate(date,bc));
                 break;
             }
             default: {
-                printf("Nous n'avons pas ce numero\n");
+                printf("Nous n avons pas ce numero\n");
                 break;
             }
 

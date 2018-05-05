@@ -10,17 +10,7 @@
 #include "tp3.h"
 
 // fonctions requises
-void printBlockChain(BlockChain Block){//1 du menu
-    if(Block){
-        T_Block* tB;
-        tB = Block;
-        while(tB){
-            printf("\n");
-            printBlock(tB);
-            tB=tB->suivant;
-        }
-    }
-}
+
 
 T_Transaction* ajouterTransaction(int idEtu, float montant, char *descr, time_t date, BlockChain bc){//il faut donner le pointeur sur le bon block pour inserer la transaction
     //allocation de l'espace mémoire correspondant à une transaction
@@ -67,7 +57,7 @@ BlockChain ajouterBlock(BlockChain bc, time_t t){//#DONE
     return bc;
 }
 
-float totalTransactionEtudiantBlock(int idEtu, BlockChain Block){//
+float totalTransactionEtudiantBlock(int idEtu, BlockChain Block){//envoie la variation du solde pour un block
     float soldeJour=0.0;
     if(Block){
 
@@ -103,10 +93,7 @@ float soldeEtudiant(int idEtu, BlockChain bc){//4 requis //retourne le montant d
     return solde;
 }
 
-void consulter(int idEtu, BlockChain bc){
-    printf("L etudiant %d a %f EATCoins et les cing dernieres transactions sont:\n",idEtu,soldeEtudiant(idEtu,bc));
-    printHistory(idEtu,bc,5);
-}
+
 
 void crediter(int idEtu, float montant, char *descr,time_t date, BlockChain bc){//5 #DONE
         bc->listeTransaction = ajouterTransaction(idEtu,montant,descr,date,bc);
@@ -133,110 +120,9 @@ int transfert(int idSource, int idDestination, float montant, char *descr,time_t
     return 1;
 }
 //fonctions intervenantes dans le menu
-int menu(){
-    printf("   ----------------------------------------------------------\n");
-    printf("  | Que voulez-vous faire ?                                  |\n");
-    printf("   ----------------------------------------------------------\n");
-    printf("  |1. Afficher la liste de la BlockChain                     |\n");
-    printf("  |2. Afficher toutes les transactions d’un bloc             |\n");
-    printf("  |3. Affiche les transactions du jour pour un étudiant      |\n");
-    printf("  |4. Afficher l’historique pour un étudiant                 |\n");
-    printf("  |5. crediter/payer/transferer                              |\n");
-    printf("  |8. Quitter                                                |\n");
-    printf("  |9. Exporter toutes les transactions vers un fichier       |\n");
-    printf("  |10. Importer des transactions depuis un fichier           |\n");
-    printf("  |11. Afficher le montant echange aujourd hui par letudiant |\n");
-    printf("  |12. Afficher le solde du compte                           |\n");
-    printf("  |                                                          |\n");
-    printf("  |14. Supprimer les transactions du Block                   |\n");
-    printf("  |15. Supprimer les Blocks                                  |\n");
-    printf("   ----------------------------------------------------------\n");
-
-    return 0;
-}
-
-void printBlock(T_Block* Block){//2 dans le menu //plus de malloc
-    if(Block){printf("Le Block %d existe",Block->idBlock);
-    time_t timestamp = Block->date;
-    const char * strDate = asctime( localtime( & timestamp ) );
-    printf( " date du %s", strDate );
-
-        T_Transaction* temp;
-        temp=Block->listeTransaction;
-
-        if(Block->listeTransaction){
-            printf(" et contient une liste de transaction\n");
-            //printf("temp de la fonction print block initialisée\n");
-            while(temp){
-                printTransaction(temp);
-                //printf("temp de la fonction print block a imprime la transaction\n");
-                temp=temp->suivant;
-            }
-        }else{
-            printf(" et contient une liste de transaction vide\n");
-        }
-
-    }else{
-        printf("Ce Block nexiste pas\n");
-    }
-}
-
-void printBlockEtu(int idEtu,T_Block* Block){//3 menu
-    if(Block){printf("Le Block %d existe",Block->idBlock);
-
-        T_Transaction* temp;
-        temp=Block->listeTransaction;
-
-        if(Block->listeTransaction){
-            printf(" et contient une liste de transaction\n");
-            while(temp){
-                if(temp->idEtu==idEtu)
-                    printTransaction(temp);
-                temp=temp->suivant;
-            }
-        }else{
-            printf(" et contient une liste de transaction vide\n");
-        }
-    }else{
-        printf("Ce Block nexiste pas\n");
-    }
-}
-
-void printHistory(int idEtu, BlockChain bc, int lim){//4 dans le menu #DONE
-    int limPrintT = 0;
-    if(bc){
-        T_Block* tB;
-        tB = bc;
-        while(tB&&limPrintT<lim){
-
-            T_Transaction* temp;
-            temp=tB->listeTransaction;
-
-            if(temp){
-                //printf("Ce Block contient une liste de transaction\n");
-                while(temp&&limPrintT<5){
-                    if(temp->idEtu==idEtu){
-                        printf("[Block:%d Etu:%d echange %f EatCoins %s]\n",tB->idBlock,temp->idEtu,temp->montant,temp->descr);
-                        limPrintT++;
-                    }
-                    temp=temp->suivant;
-                }
-            }else{
-                //printf("Ce Block contient une liste de transaction vide\n");
-            }
-            tB=tB->suivant;
-        }
-    }
-}
 
 //fonctions optionelles
-void printTransaction(T_Transaction* t){
-    if(t){
-        if(t->descr!=NULL){
-            printf("[%d echange %.2f EatCoins %s]\n",t->idEtu,t->montant,t->descr);
-        }
-    }
-}
+
 
 void fprintTransaction(time_t date, T_Transaction* t){// #DONE copie la transaction en fin de fichier txt.
     //écrire à la fin du fichier
@@ -427,7 +313,7 @@ int askIdBlock(){
     idEtu=0;
 
     do{
-        printf(" saisissez le numero de votre choix:");
+        printf("Saisissez un le numero de votre choix:");
         fgetsClean(sidEtu);
         sscanf(sidEtu,"%d",&idEtu);
     }while(idEtu<=0);
@@ -490,7 +376,7 @@ T_Block* searchBlockbyId(int idBlock, BlockChain bc){//renvoi le block de la cha
     return NULL;
 }
 
-T_Block* searchBlockbyDateNonTrie(time_t date, BlockChain bc){//#DONE /:parcourt tout bc avant de renvoyer le blaock
+T_Block* searchBlockbyDate(time_t date, BlockChain bc){//#DONE
     T_Block* temp;
     if(!bc)return NULL;
     temp=bc;
@@ -505,49 +391,13 @@ T_Block* searchBlockbyDateNonTrie(time_t date, BlockChain bc){//#DONE /:parcourt
 BlockChain* searchTransactionToInsert(time_t date,BlockChain* bc,BlockChain *bonB){//#DONE
     if(bc && date != (-1)){
         *bonB = searchBlockbyDate(date,*bc);
-        if((*bonB)->date!=date){
-            (*bonB)->suivant = ajouterBlock((*bonB)->suivant,date);
-            *bonB=(*bonB)->suivant;
-            //*bonB=*bc;
+        if(!*bonB){
+            *bc = ajouterBlock(*bc,date);
+            *bonB=*bc;
         }
         return bonB;
     }
     return NULL;
 }
 
-void PrintMenuAjou(){
-    printf("   ----------------------------------------------------------\n");
-    printf("  | Que voulez-vous faire ?                                  |\n");
-    printf("   ----------------------------------------------------------\n");
-    printf("  |5. Crediter un compte                                     |\n");
-    printf("  |6. Payer un repas                                         |\n");
-    printf("  |7. Transferer des EATCoins entre deux etudiants           |\n");
-    printf("   ----------------------------------------------------------\n");
-}
 
-
-T_Block* searchBlockbyDate(time_t date, BlockChain bc){//#DONE
-    T_Block* temp;
-    if(!bc) return NULL;
-    temp=bc;
-    while(temp && temp->suivant && date<temp->date && date<(temp->suivant)->date)
-    {
-            temp=temp->suivant;
-    }
-    printBlock(temp);
-    return temp;
-}
-
-BlockChain insertBlock(BlockChain bc, BlockChain* Block, BlockChain* newB){
-    if(*Block){
-        if((*Block)->date == bc->date){//inserer au debut de la liste.
-;
-        }
-        if((*Block)->suivant){
-            (*newB)->suivant=(*Block)->suivant;
-            (*Block)->suivant=newB;
-            return newB;
-        }
-
-    }
-}

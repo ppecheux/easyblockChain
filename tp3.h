@@ -42,7 +42,6 @@ void printBlockEtu(int idEtu,T_Block* Block);//3 menu
 void printHistory(int idEtu, BlockChain bc, int lim);//4 menu
 
 //fonctions optionelles
-T_Block* searchBlockbyDate(time_t date, BlockChain bc);
 void printTransaction(T_Transaction* t);
 void clearTransactions(BlockChain Block);// free les transactions d'un block
 BlockChain clearBlocks(BlockChain Block);
@@ -57,7 +56,7 @@ void fprintTransactionAtBegin(time_t date, T_Transaction* t);//copie la transact
 void fprintBlock(BlockChain Block);//engegistre les transctions d'un block dans un fichier
 void fprintBlockChain(BlockChain Block);
 T_Block* searchBlockbyId(int idBlock, BlockChain bc);
-T_Block* searchBlockbyDateNonTrie(time_t date, BlockChain bc);
+T_Block* searchBlockbyDate(time_t date, BlockChain bc);
 BlockChain* searchTransactionToInsert(time_t date,BlockChain* bc,BlockChain *bonB);//trouver le bon Block pour inserer une tr
 void PrintMenuAjou();
 #endif // tp3_H_INCLUDED
