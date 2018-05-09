@@ -69,7 +69,7 @@ time_t askDate(){//demande de date et convertion en secondes
 
         timestamp = mktime( & myDate );
     }while(timestamp == -1);
-    timestamp-=(timestamp%3600)+3600;//pour normaliser les minutes
+    timestamp-=(timestamp%(3600*24)+3600);//pour normaliser les minutes
     //printf( "Timestamp == %ld\n", timestamp );
 
 //    const char * strDate = asctime( localtime( & timestamp ) );

@@ -13,14 +13,7 @@ int main()
     //initialisation de variable?
     int choix;
     BlockChain bc;
-
-    //initialisation de notre blockChain
-    bc = (BlockChain)malloc(sizeof(T_Block));
-    bc->suivant=NULL;//il n'y a pas de suivant!//pourquoi cela change d'adresse?
-    bc->idBlock=0;
-    bc->date=949446000;//askDate();//c'est la date du 2/2/2000
-
-    bc->listeTransaction=NULL;
+    bc = creeBlock(949446000);
 
     //demarage de l'implémentation
     printf("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
@@ -78,14 +71,14 @@ int main()
                 PrintMenuAjou();
                 do{
                     sousChoix= askIdBlock();
-                }while (sousChoix>=7 && sousChoix<=5);
+                }while (sousChoix>7 || sousChoix<5);
 
                 //informations generales avant d'inserer une nouvelle transaction
                 //pour la date
                 time_t date;
                 do{
                     date = askDate();
-                }while (date == (-1)); //|| (!searchBlockbyDate(date,bc)&& date<bc->date && (printf("la creation de blocks dans le passe nest pas autorisee\n"))));
+                }while (date == (-1));
 
                 char *descr = (char *)malloc(MAX_DESCR+1);
                 float montant;
