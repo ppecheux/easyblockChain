@@ -16,7 +16,7 @@ void fAjouTransaction(BlockChain* bc){//pour ajouter une transaction depuis un f
         time_t date;
         int idEtu;
         float montant;
-        char* descr= (char*)malloc(sizeof(MAX_DESCR+1));
+        char* descr= (char*)malloc(sizeof(char)*MAX_DESCR+1);
 
         FILE* fichier = NULL;
         fichier = fopen("blockchain.txt", "r");
