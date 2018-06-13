@@ -4,9 +4,9 @@
 #include <time.h>
 #include "tp3.h"
 
-/*Auteurs: Oubine Perrin et Pierre-Louis Pécheux*/
+/*Auteurs: Oubine Perrin et Pierre-Louis Pcheux*/
 /*Bienvenue sur le tp3 de NF16*/
-/*Implémentation d'une BlockChain*/
+/*Implmentation d'une BlockChain*/
 
 int main()
 {
@@ -15,7 +15,7 @@ int main()
     BlockChain bc;
     bc = creeBlock(949446000);
 
-    //demarage de l'implémentation
+    //demarage de l'implmentation
     printf("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
     printf("x                                                                    x\n");
     printf("x Bienvenue,                                                         x\n");
@@ -30,7 +30,7 @@ int main()
         menu();
         choix= askIdBlock();
 
-        //réalisation du choix
+        //ralisation du choix
         switch (choix) {
             case 1 :{
                 printBlockChain(bc);
@@ -39,7 +39,7 @@ int main()
             case 2 :{//afficher toutes les transactions d'un block #done
 
                 //initialisation des variables
-                char *sidBlock = (char *)malloc(MAX_I+1);
+                char *sidBlock = (char *)malloc((MAX_I+1)*sizeof(char));
                 int idBlock=-1;
 
                 //saisie de l'id du Block
@@ -91,7 +91,7 @@ int main()
                 montant=askMontant();
 
 
-                //determination du block à la date précise
+                //determination du block  la date prcise
                 BlockChain bonB;
                 bonB=(*searchTransactionToInsert(date,&bc));
 
@@ -127,7 +127,7 @@ int main()
                 fAjouTransaction(&bc);
                 break;
             }
-            case 11 :{//montant de la journée #done
+            case 11 :{//montant de la journe #done
                 int idEtu;
                 idEtu=askIdEtu();
                 printf("L etudiant %d a echange %f aujourd hui\n",idEtu,totalTransactionEtudiantBlock(idEtu,bc));
